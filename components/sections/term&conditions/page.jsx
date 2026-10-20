@@ -37,7 +37,7 @@ const terms = [
 
 export default function TermsAndConditions() {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#0b0b0b] px-5 py-16 text-white sm:px-8 md:py-20">
+    <section className="relative min-h-screen overflow-hidden bg-[#0b0b0b] px-5 py-16 mt-20 text-white sm:px-8 md:py-20">
       {/* Background glow effects */}
       <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-[#86c923]/[0.08] blur-[120px]" />
 

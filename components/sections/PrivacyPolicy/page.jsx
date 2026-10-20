@@ -172,7 +172,7 @@ export default function PrivacyPolicy() {
   return (
     <section
       id="privacy-policy"
-      className="relative min-h-screen overflow-hidden bg-[#0b0b0b] px-5 py-16 text-white sm:px-8 md:py-20"
+      className="relative min-h-screen overflow-hidden bg-[#0b0b0b] px-5 mt-20 py-16 text-white sm:px-8 md:py-20"
     >
  
       {/* Subtle green background glow */}
