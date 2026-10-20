@@ -12,8 +12,8 @@ import { ArrowUpRight } from "lucide-react";
 // Footer navigation links
 const footerLinks = [
   { label: "Accessibility", href: "/" },
-  { label: "Terms & Conditions", href: "/terms-and-conditions" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms & Conditions", href: "/term&conditions" },
+  { label: "Privacy Policy", href: "/privacyPolicy" },
   { label: "Shipping Policy", href: "/" },
   { label: "Refund Policy", href: "/" },
 ];
