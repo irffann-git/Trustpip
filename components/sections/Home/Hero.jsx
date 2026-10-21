@@ -12,7 +12,7 @@ const LINE_BOX = 1.2;
 // Gap between the two lines in px
 const LINE_GAP = 2;
 // Where the button takes the visitor
-const KNOW_MORE_HREF = "#";
+const KNOW_MORE_HREF = "#offers";
 
 // Headline variants
 const HEADLINE_FULL = ["BEST  FOREX  TRADING  INSTITUTE"];
