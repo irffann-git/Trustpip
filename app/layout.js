@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import SplashCursor from "../components/SplashCursor";
 import Footer from "@/components/layout/Footer";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import AutoScrollToTop from "@/components/AutoScrollToTop";
 
 // Configure Sansation Google Font
 const sansation = Sansation({
@@ -23,7 +24,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={sansation.className}>
         {/* Cursor effect */}
         <SplashCursor
@@ -48,6 +49,7 @@ export default function RootLayout({ children }) {
 
         {/* All page content */}
         <main>{children}</main>
+        <AutoScrollToTop />
 <WhatsAppWidget/>
         {/* Website Footer */}
         <Footer />

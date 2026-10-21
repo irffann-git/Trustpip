@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import TradingBackground from "@/components/TradingBackground";
 import { ArrowRight } from "lucide-react";
 
@@ -44,8 +45,8 @@ function WhatAreWe() {
           </p>
 
           {/* Read More Button */}
-          <a
-            href="/about"
+          <Link
+            href="/"
             className="group mt-8 inline-flex items-center gap-3 rounded-full bg-[#7ecd07] px-8 py-4 text-md font-semibold text-black transition-all duration-300 hover:bg-[#9DDF4B] hover:shadow-[0_0_25px_rgba(139,203,61,0.2)]"
           >
             Read More
@@ -54,7 +55,7 @@ function WhatAreWe() {
               size={19}
               className="transition-transform duration-300 group-hover:translate-x-1"
             />
-          </a>
+          </Link>
         </div>
 
         {/* Right Content - Trust PIP Logo */}

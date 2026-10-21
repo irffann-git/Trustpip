@@ -7,16 +7,20 @@ import TechText from "../../TechText";
 import StarBorder from "../../StarBorder";
 import TickerCards from "./TickerCards";
 
-
 // Box height as a multiple of the font size (lower = tighter lines)
 const LINE_BOX = 1.2;
 // Gap between the two lines in px
 const LINE_GAP = 2;
 // Where the button takes the visitor
-const KNOW_MORE_HREF = "/services";
+const KNOW_MORE_HREF = "#";
 
-// Scales the font so each line fits the screen width on mobile, tablet and desktop
-function useFontSizes() {
+// Headline variants
+const HEADLINE_FULL = ["BEST  FOREX  TRADING  INSTITUTE"];
+const HEADLINE_SPLIT = ["BEST  FOREX", "TRADING  INSTITUTE"];
+const SUBLINE = "IN  CALICUT  KERALA";
+
+// Breakpoints: mobile < 640, tablet < 1024, desktop >= 1024
+function useHeroLayout() {
   const [width, setWidth] = useState(1280);
 
   useEffect(() => {
@@ -26,10 +30,24 @@ function useFontSizes() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
+  const mode = width < 640 ? "mobile" : width < 1024 ? "tablet" : "desktop";
   const usable = width * 0.92;
-  const line1 = Math.max(18, Math.min(110, Math.floor(usable / (28 * 0.62))));
-  const line2 = Math.max(16, Math.min(90, Math.floor(usable / (17 * 0.62))));
-  return { line1, line2 };
+
+  // Desktop: unchanged from the original
+  if (mode === "desktop") {
+    return {
+      mode,
+      headline: HEADLINE_FULL,
+      line1: Math.max(18, Math.min(110, Math.floor(usable / (28 * 0.62)))),
+      line2: Math.max(16, Math.min(90, Math.floor(usable / (17 * 0.62)))),
+    };
+  }
+
+  // Tablet + mobile: headline wraps to two lines, sized by the longest line (18 chars)
+  const fit = Math.floor(usable / (18 * 0.62));
+  const line1 = Math.max(24, Math.min(mode === "mobile" ? 56 : 84, fit));
+  const line2 = Math.max(14, Math.floor(line1 * 0.62));
+  return { mode, headline: HEADLINE_SPLIT, line1, line2 };
 }
 
 const techTextProps = {
@@ -58,11 +76,17 @@ const techTextProps = {
 };
 
 function Hero() {
-  const { line1, line2 } = useFontSizes();
+  const { mode, headline, line1, line2 } = useHeroLayout();
   const router = useRouter();
+  const isDesktop = mode === "desktop";
+  const isMobile = mode === "mobile";
+
+  // Space reserved at the bottom so content never sits under the ticker
+  const bottomReserve = isDesktop ? 0 : isMobile ? 96 : 88;
 
   return (
     <div
+      className="hero-root"
       style={{
         width: "100%",
         height: "100vh",
@@ -70,11 +94,18 @@ function Hero() {
         overflow: "visible", // text is allowed to extend past the hero
       }}
     >
-      {/* Forces every element inside the text layer to show its overflow */}
       <style>{`
         .hero-text,
         .hero-text * {
           overflow: visible !important;
+        }
+        /* Mobile browsers: avoid the address-bar jump. Desktop is untouched. */
+        @media (max-width: 1023px) {
+          .hero-root {
+            height: 100vh;
+            height: 100svh;
+            min-height: 520px;
+          }
         }
       `}</style>
 
@@ -93,7 +124,7 @@ function Hero() {
           hoverColor="#7ecd07"
           hoverFillColor="#7ecd07"
           fillOpacity={0.2}
-          cellSize={61}
+          cellSize={isDesktop ? 61 : isMobile ? 40 : 52}
           speed={0.85}
           tiltX={0}
           tiltY={0}
@@ -121,38 +152,43 @@ function Hero() {
           alignItems: "center",
           justifyContent: "center",
           gap: `${LINE_GAP}px`,
-          padding: "0 4vw",
+          padding: isDesktop ? "0 4vw" : `0 4vw ${bottomReserve}px`,
           pointerEvents: "none", // lets the grid hover effect work around the text
         }}
       >
-        <div
-          style={{
-            width: "100%",
-            height: `${Math.round(line1 * LINE_BOX)}px`,
-            position: "relative",
-            pointerEvents: "auto",
-          }}
-        >
-          <TechText
-            {...techTextProps}
-            text="BEST  FOREX  TRADING  INSTITUTE"
-            fontSize={line1}
-            color="#ffffff"
-            accentColor="#7ecd07"
-          />
-        </div>
+        {headline.map((text, i) => (
+          <div
+            key={`${mode}-h-${i}`}
+            style={{
+              width: "100%",
+              height: `${Math.round(line1 * LINE_BOX)}px`,
+              position: "relative",
+              pointerEvents: "auto",
+            }}
+          >
+            <TechText
+              {...techTextProps}
+              text={text}
+              fontSize={line1}
+              color="#ffffff"
+              accentColor="#7ecd07"
+            />
+          </div>
+        ))}
 
         <div
+          key={`${mode}-sub`}
           style={{
             width: "100%",
             height: `${Math.round(line2 * LINE_BOX)}px`,
             position: "relative",
             pointerEvents: "auto",
+            marginTop: isDesktop ? 0 : isMobile ? "6px" : "8px",
           }}
         >
           <TechText
             {...techTextProps}
-            text="IN  CALICUT  KERALA"
+            text={SUBLINE}
             fontSize={line2}
             color="#ffffff"
             accentColor="#7ecd07"
@@ -162,8 +198,9 @@ function Hero() {
         {/* Tagline */}
         <p
           style={{
-            margin: "20px 0 0",
-            maxWidth: "46rem",
+            margin: isDesktop ? "20px 0 0" : isMobile ? "14px 0 0" : "18px 0 0",
+            padding: isDesktop ? 0 : "0 8px",
+            maxWidth: isDesktop ? "46rem" : "34rem",
             textAlign: "center",
             fontSize: "clamp(14px, 2.2vw, 22px)",
             lineHeight: 1.5,
@@ -179,7 +216,7 @@ function Hero() {
         {/* Button */}
         <div
           style={{
-            marginTop: "28px",
+            marginTop: isDesktop ? "28px" : isMobile ? "20px" : "24px",
             display: "flex",
             flexWrap: "wrap",
             alignItems: "center",
@@ -209,8 +246,8 @@ function Hero() {
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                minWidth: "clamp(150px, 32vw, 200px)",
-                height: "clamp(44px, 6vw, 52px)",
+                minWidth: "clamp(15px, 10vw, 200px)",
+                height: "clamp(4px, 3vw, 40px)",
                 fontSize: "clamp(14px, 1.8vw, 17px)",
                 fontWeight: 600,
                 letterSpacing: "0.02em",
