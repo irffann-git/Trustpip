@@ -10,7 +10,7 @@ const items = [
   { label: "Home", href: "/" },
   { label: "Term & Conditions", href: "/term&conditions" },
   { label: "Privacy Policy", href: "/privacyPolicy" },
-  { label: "Services", href: "#offer" },
+  { label: "Services", href: "/#offer" },
   { label: "Contact", href: "/contact" },
 ];
 

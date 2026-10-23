@@ -1,6 +1,5 @@
 
     import Hero from "@/components/sections/Home/Hero";
-    import BullVsBear from "@/components/BullVsBear";
 import WhatAreWe from "@/components/sections/Home/WhatAreWe";
 import WhatWeOffer from "@/components/sections/Home/Whatweoffer";
 import OurMentors from "@/components/sections/Home/OurMentors";
@@ -16,7 +15,6 @@ export default function Home() {
   return (
    <>
    <Hero/>
-   <BullVsBear/>
    <WhatAreWe/>
    <WhatWeOffer/>
     <OurMentors/>
